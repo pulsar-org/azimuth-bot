@@ -2,6 +2,9 @@ import discord
 
 bot = discord.Bot()
 
+@bot.event
+async def on_ready():
+    print(f"{bot.user} is ready and online!")
 
 @bot.slash_command(name = "test", description = "Latest testing command")
 async def hello(ctx):
@@ -23,6 +26,14 @@ async def hello(ctx):
     embed.set_image(url="https://example.com/link-to-my-banner.png")
 
     await ctx.respond("Hello! Here's a cool embed.", embed=embed)  # Send the embed with some text
+
+@bot.command(description="Sends the bot's latency.") # this decorator makes a slash command
+async def ping(ctx): # a slash command will be created with the name "ping"
+    await ctx.respond(f"Pong! Latency is {bot.latency}ms")
+
+@bot.slash_command(name = "hello", description = "Say hello to the bot")
+async def hello(ctx):
+    await ctx.respond("Hey!")
 
 
 bot.run("MTA5ODgwODE0MDQzNjM1NzIzMg.GRMUha.t1YMF2IC1_N-bWuAkfLkEqHXjEnHTpV4VB4DsY")
