@@ -127,3 +127,7 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+#put sensitive files here
+ sensitive/important things.txt
+sensitive/important things.txt
