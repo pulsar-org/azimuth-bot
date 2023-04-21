@@ -130,3 +130,4 @@ dmypy.json
 
 #put sensitive files here
  sensitive/important things.txt
+sensitive/important things.txt
