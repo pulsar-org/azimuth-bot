@@ -129,4 +129,4 @@ dmypy.json
 .pyre/
 
 #put sensitive files here
- important things.txt
+ sensitive/important things.txt
