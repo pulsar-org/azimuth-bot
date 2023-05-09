@@ -5,55 +5,16 @@ import time
 import subprocess
 
 
-def get_chrome(port, id):
-    return "mkdir " + id + "; cd" + id + "; sudo docker run --rm -it --shm-size=512m -p " + port + ":" + port + " -e VNC_PW=password kasmweb/chrome:1.13.0; cd .."
-
-
-def get_edge(port, id):
-    return "mkdir " + id + "; cd" + id + "; sudo docker run --rm -it --shm-size=512m -p " + port + ":" + port + " -e VNC_PW=password kasmweb/edge:1.13.0; cd .."
-
-
-def get_brave(port, id):
-    return "mkdir " + id + "; cd" + id + "; sudo docker run --rm -it --shm-size=512m -p " + port + ":" + port + " -e VNC_PW=password kasmweb/brave:1.13.0; cd .."
-
-
-def get_firefox(port, id):
-    return "mkdir " + id + "; cd" + id + "; sudo docker run --rm -it --shm-size=512m -p " + port + ":" + port + " -e VNC_PW=password kasmweb/firefox:1.13.0; cd .."
-
-
-def get_tor(port, id):
-    return "mkdir " + id + "; cd" + id + "; sudo docker run --rm -it --shm-size=512m -p " + port + ":" + port + " -e VNC_PW=password kasmweb/tor-browser:1.13.0; cd .."
-
-
-def get_retroarch(port, id):
-    return "mkdir " + id + "; cd" + id + "; sudo docker run --rm -it --shm-size=512m -p " + port + ":" + port + " -e VNC_PW=password kasmweb/retroarch:1.13.0; cd .."
-
+def run_something(port, id, type):
+    return ["mkdir", str(id) + ";", "cd", str(id) + ";", "sudo", "docker", "run", "--rm", "-it", "--shm-size=512m", "-p", str(port), ":", str(port), "-e", "VNC_PW=password", "kasmweb/" + type+"1.13.0;", "cd", ".."]
 
 def create_session(session_type, user_id, port, session_id):
     print("Create a session using docker")
 
-    global process
-    process = subprocess.Popen("")
+    subprocess.call(["mkdir", "session"])
+    subprocess.call(["cd", "session"])
 
-    if session_type == "chrome":  # this is disgustingly bad
-        process = subprocess.Popen(get_chrome(port, session_id))
-    elif session_type == "edge":
-        process = subprocess.Popen(get_edge(port, session_id))
-    elif session_type == "brave":
-        process = subprocess.Popen(get_brave(port, session_id))
-    elif session_type == "firefox":
-        process = subprocess.Popen(get_firefox(port, session_id))
-    elif session_type == "tor":
-        process = subprocess.Popen(get_tor(port, session_id))
-    elif session_type == "retroarch":
-        process = subprocess.Popen(get_retroarch(port, session_id))
-    else:
-        return
-
-    mkdirprocess = subprocess.Popen("mkdir " + str(session_id))
-    mkdirprocess.communicate()
-
-    process.communicate()
+    subprocess.call(run_something(port, session_id, session_type))
 
     create_file(session_id, user_id, port, session_type)
 

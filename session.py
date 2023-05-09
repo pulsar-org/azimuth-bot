@@ -10,7 +10,7 @@ class Session:
         self.user_id = user_id
         self.port = port
         self.id = az_util.gen_id()
-        self.path = "/" + self.id + "/"
+        self.path = os.path.join("/", self.id)
 
         print("Creating browser type:", type, "| for user", user_id)
         az_util.create_session(type, user_id, self.port, self.id)
