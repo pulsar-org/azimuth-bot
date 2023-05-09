@@ -36,17 +36,17 @@ def create_session(session_type, user_id, port, session_id):
     process = subprocess.Popen("")
 
     if session_type == "chrome":  # this is disgustingly bad
-        process = subprocess.Popen(get_chrome(port))
+        process = subprocess.Popen(get_chrome(port, session_id))
     elif session_type == "edge":
-        process = subprocess.Popen(get_edge(port))
+        process = subprocess.Popen(get_edge(port, session_id))
     elif session_type == "brave":
-        process = subprocess.Popen(get_brave(port))
+        process = subprocess.Popen(get_brave(port, session_id))
     elif session_type == "firefox":
-        process = subprocess.Popen(get_firefox(port))
+        process = subprocess.Popen(get_firefox(port, session_id))
     elif session_type == "tor":
-        process = subprocess.Popen(get_tor(port))
+        process = subprocess.Popen(get_tor(port, session_id))
     elif session_type == "retroarch":
-        process = subprocess.Popen(get_retroarch(port))
+        process = subprocess.Popen(get_retroarch(port, session_id))
     else:
         return
 
@@ -63,7 +63,7 @@ def create_session(session_type, user_id, port, session_id):
 
 
 def create_file(session_id, user_id, port, session_type):
-    with open("sessions" + "/" + session_id, "x") as file:
+    with open(os.path.join("sessions", session_id), "x") as file:
         file.writelines("type: " + session_type + "\n" +
                         "id: " + session_id + "\n" +
                         "user_id: " + user_id + "\n" +
@@ -76,7 +76,7 @@ def get_sessions():
 
 
 def delete_session(session_id):
-    path = "sessions" + "/" + session_id
+    path = os.path.join("sessions", session_id)
     os.remove(path)
 
 
